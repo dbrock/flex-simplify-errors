@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var inspect = require("util").inspect
 var messages_html = require("libxmljs").parseXmlString(
   require("fs").readFileSync(__dirname + "/messages.html").toString()
