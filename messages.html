@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <html>
   <head>
     <meta charset="utf-8"/>
@@ -8,10 +7,9 @@
 
       ul { font: 16px "Helvetica Neue"; margin: 0 0 4ex 2em; }
       ul { padding: 0; list-style-type: none; line-height: 1.5; }
-      li var { display: inline-block; width: 100px; }
+      li var { display: inline-block; width: 200px; }
 
       dt, dd { padding: .5ex .5em; background: #eee; }
-
       dt { font: 14px monospace; }
       dd { font: bold 18px Helvetica; line-height: 1.5; }
       dt { margin: .5ex 0; }
@@ -26,11 +24,12 @@
       <li><var>foo</var> identifier</li>
       <li><var>Bar</var> qualified type name</li>
       <li><var>BAZ</var> syntax token name</li>
-      <li><var>quux.as</var> file name (plus optional line number)</li>
+      <li><var>quux.as</var> filename plus optional line number</li>
+      <li><var>quux.as:123</var> filename plus optional line number</li>
     </ul>
     <dl>
-      <dt>Unable to resolve MXML language version. Please specify the language
-        namespace on the root document tag</dt>
+      <dt>Unable to resolve MXML language version. Please specify the
+        language namespace on the root document tag</dt>
       <dd>missing xmlns:fx="http://ns.adobe.com/mxml/2009"</dd>
 
       <dt>Incorrect number of arguments. Expected (\d+)</dt>
@@ -39,8 +38,8 @@
       <dt>Incorrect number of arguments. Expected no more than (\d+)</dt>
       <dd>expected at most <var>foo</var> arguments</dd>
 
-      <dt>Interface method (.+) in namespace (.+) not implemented by class
-        (?:.+)</dt>
+      <dt>Interface method (.+) in namespace (.+) not implemented by
+        class (?:.+)</dt>
       <dd>‘<var>foo</var>’ (from <var>Bar</var>) not implemented</dd>
 
       <dt>Interface method (.+) in namespace (.+) is implemented with an

@@ -1,12 +1,9 @@
 {
   "author": "Daniel Brockman <@dbrock>",
-  "name": "flash-concisely",
-  "description": "Make Flash and Flex error messages more concise",
+  "name": "simplify-flex-error",
+  "description": "Simplify Flash/Flex error messages",
   "version": "0.0.0",
-  "main": "concisely.js",
-  "scripts": {
-    "test": "node test.js"
-  },
+  "main": "simplify.js",
   "dependencies": {
     "libxmljs": "~0.5.4"
   },
