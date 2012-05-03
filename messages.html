@@ -6,20 +6,28 @@
       body { margin: 0 5em; padding: 25px 0 100px; }
       h1 { font: 200 32px "Helvetica Neue"; }
 
+      ul { font: 16px "Helvetica Neue"; margin: 0 0 4ex 2em; }
+      ul { padding: 0; list-style-type: none; line-height: 1.5; }
+      li var { display: inline-block; width: 100px; }
+
+      dt, dd { padding: .5ex .5em; background: #eee; }
+
       dt { font: 14px monospace; }
-      dd { font: bold 18px Helvetica; }
+      dd { font: bold 18px Helvetica; line-height: 1.5; }
+      dt { margin: .5ex 0; }
+      dd { margin: .5ex 0 2ex; }
 
-      dt { margin: 1ex 0 0; }
-      dd { margin: 1ex 0 1ex; padding: 0 0 1ex; }
-      dd { border-bottom: 2px solid #ccc; }
-
-      var { font-style: normal; font-weight: normal; }
-      var.location { font-style: normal; font-weight: normal; }
-      var.location:after { content: ": "; }
+      var { font-style: normal; font-weight: normal; color: blue; }
     </style>
   </head>
   <body>
-    <h1>Concisely: Flash and Flex error messages</h1>
+    <h1>Simplified Flash and Flex error messages</h1>
+    <ul>
+      <li><var>foo</var> identifier</li>
+      <li><var>Bar</var> qualified type name</li>
+      <li><var>BAZ</var> syntax token name</li>
+      <li><var>quux.as</var> file name (plus optional line number)</li>
+    </ul>
     <dl>
       <dt>Unable to resolve MXML language version. Please specify the language
         namespace on the root document tag</dt>
@@ -81,12 +89,12 @@
       <dt>Ambiguous reference to (.+)</dt>
       <dd>‘<var>foo</var>’ is ambiguous</dd>
 
-      <dt>Can not resolve a multiname reference unambiguously. (\S+) \(from
-        ([^)]+)\) and (\S+) \(from ([^)]+)\) are available</dt>
+      <dt>Can not resolve a multiname reference unambiguously. (\S+)
+        \(from ([^)]+)\) and (\S+) \(from ([^)]+)\) are available</dt>
       <dd>
         <div><var>Foo</var> conflicts with <var>Baz</var></div>
-        <div><var class="location">bar</var> conflicting definition</div>
-        <div><var class="location">quux</var> conflicting definition</div>
+        <div><var>bar.as</var>: conflicting definition</div>
+        <div><var>quux.as</var>: conflicting definition</div>
       </dd>
 
       <dt>A conflict exists with definition (.+) in namespace internal</dt>
