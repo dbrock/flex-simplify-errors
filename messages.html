@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <style>
+      body { margin: 0 5em; padding: 25px 0 100px; }
+      h1 { font: 200 32px "Helvetica Neue"; }
+
+      dt { font: 14px monospace; }
+      dd { font: bold 18px Helvetica; }
+
+      dt { margin: 1ex 0 0; }
+      dd { margin: 1ex 0 1ex; padding: 0 0 1ex; }
+      dd { border-bottom: 2px solid #ccc; }
+
+      var { font-style: normal; font-weight: normal; }
+      var.location { font-style: normal; font-weight: normal; }
+      var.location:after { content: ": "; }
+    </style>
+  </head>
+  <body>
+    <h1>Concisely: Flash and Flex error messages</h1>
+    <dl>
+      <dt>Unable to resolve MXML language version. Please specify the language
+        namespace on the root document tag</dt>
+      <dd>missing xmlns:fx="http://ns.adobe.com/mxml/2009"</dd>
+
+      <dt>Incorrect number of arguments. Expected (\d+)</dt>
+      <dd>expected <var>foo</var> arguments</dd>
+
+      <dt>Incorrect number of arguments. Expected no more than (\d+)</dt>
+      <dd>expected at most <var>foo</var> arguments</dd>
+
+      <dt>Interface method (.+) in namespace (.+) not implemented by class
+        (?:.+)</dt>
+      <dd>‘<var>foo</var>’ (from <var>Bar</var>) not implemented</dd>
+
+      <dt>Interface method (.+) in namespace (.+) is implemented with an
+        incompatible signature in class (?:.+)</dt>
+      <dd>‘<var>foo</var>’ (from <var>Bar</var>) implemented incorrectly</dd>
+
+      <dt>Access of possibly undefined property (.+) through a reference
+        with static type (.+)</dt>
+      <dt>Call to a possibly undefined method (.+) through a reference with
+        static type (.+)</dt>
+      <dt>Cannot resolve attribute '(.+)' for component type (.+)</dt>
+      <dd>‘<var>foo</var>’ undeclared in <var>Bar</var></dd>
+
+      <dt>Attempted access of inaccessible (?:property|method) (.+) through
+        a reference with static type (.+)</dt>
+      <dd>‘<var>foo</var>’ inaccessible in <var>Bar</var></dd>
+
+      <dt>Could not resolve &lt;(.+)&gt; to a component implementation</dt>
+      <dt>Call to a possibly undefined method (.+)</dt>
+      <dt>Access of undefined property (.+)</dt>
+      <dt>The definition of base class (.+) was not found</dt>
+      <dt>Unable to locate specified base class '(.+)' for component
+        class '.*'</dt>
+      <dt>Interface (.+) was not found</dt>
+      <dt>Type was not found or was not a compile-time constant: (.+)</dt>
+      <dd>‘<var>foo</var>’ undefined</dd>
+
+      <dt>Definition (.+) could not be found</dt>
+      <dd>‘<var>foo</var>’ not found</dd>
+
+      <dt>Implicit coercion of a value of type (.+) to an unrelated type
+        (.+)</dt>
+      <dt>Implicit coercion of a value with static type (.+) to a possibly
+        unrelated type (.+)</dt>
+      <dd>expected <var>Foo</var> (got <var>Bar</var>)</dd>
+
+      <dt>Method marked override must override another method</dt>
+      <dd>overriding nonexistent method</dd>
+
+      <dt>Overriding a function that is not marked for override</dt>
+      <dd>unmarked override</dd>
+
+      <dt>Incompatible override</dt>
+      <dd>incompatible override</dd>
+
+      <dt>Ambiguous reference to (.+)</dt>
+      <dd>‘<var>foo</var>’ is ambiguous</dd>
+
+      <dt>Can not resolve a multiname reference unambiguously. (\S+) \(from
+        ([^)]+)\) and (\S+) \(from ([^)]+)\) are available</dt>
+      <dd>
+        <div><var>Foo</var> conflicts with <var>Baz</var></div>
+        <div><var class="location">bar</var> conflicting definition</div>
+        <div><var class="location">quux</var> conflicting definition</div>
+      </dd>
+
+      <dt>A conflict exists with definition (.+) in namespace internal</dt>
+      <dd>‘<var>foo</var>’ conflicts with an internal name</dd>
+
+      <dt>Warning: return value for function 'anonymous' has no type
+        declaration</dt>
+      <dd>warning: missing return type</dd>
+
+      <dt>Warning: return value for function '(.+)' has no type
+        declaration</dt>
+      <dd>warning: ‘<var>foo</var>’ missing return type</dd>
+
+      <dt>Warning: parameter '(.+)' has no type declaration</dt>
+      <dd>warning: ‘<var>foo</var>’ missing type</dd>
+
+      <dt>
+        Warning: This compilation unit did not have a factoryClass specified
+        in Frame metadata to load the configured runtime shared
+        libraries. To compile without runtime shared libraries either set
+        the -static-link-runtime-shared-libraries option to true or remove
+        the -runtime-shared-libraries option
+      </dt>
+      <dd>warning: dangling runtime shared libraries</dd>
+
+      <dt>A file found in a source-path must have the same package structure
+        '(.*)', as the definition's package, '(.*)'</dt>
+      <dd>package should be ‘<var>foo</var>’</dd>
+
+      <dt>A file found in a source-path '(.*)' must have the same name as
+        the class definition inside the file '(.*)'</dt>
+      <dd>name should be ‘<var>foo</var>’</dd>
+
+      <dt>Comparison between a value with static type (.+) and a possibly
+        unrelated type (.+)</dt>
+      <dd>comparing <var>Foo</var> to <var>Bar</var></dd>
+
+      <dt>Illegal assignment to a variable specified as constant</dt>
+      <dd>modifying constant</dd>
+
+      <dt>Function does not have a body</dt>
+      <dd>missing function body</dd>
+
+      <dt>Return value must be undefined</dt>
+      <dd>cannot return something here</dd>
+
+      <dt>Return type of a getter definition must not be void</dt>
+      <dd>must return something</dd>
+
+      <dt>Return type of a setter definition must be unspecified or void</dt>
+      <dd>setter must not return anything</dd>
+
+      <dt>Function does not return a value</dt>
+      <dd>missing return statement</dd>
+
+      <dt>The (.+) attribute can only be used inside a package</dt>
+      <dt>The (.+) attribute may be used only on class property
+        definitions</dt>
+      <dd>‘<var>foo</var>’ unexpected</dd>
+
+      <dt>Syntax error: expecting (.+?) before (.+?)</dt>
+      <dd>missing <var>FOO</var> (found <var>BAR</var> instead)</dd>
+
+      <dt>Syntax error: XML does not have matching begin and end tags</dt>
+      <dd>XML tag mismatch</dd>
+
+      <dt>(.*)</dt>
+      <dd><var>foo</var></dd>
+    </dl>
+  </body>
+</html>
