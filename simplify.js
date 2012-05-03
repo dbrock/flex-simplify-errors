@@ -4,7 +4,18 @@ var messages_html = require("libxmljs").parseXmlString(
 )
 
 if (require.main === module) {
-  console.log(simplify(process.argv.slice(2).join(" ")))
+  if (process.argv.length === 2) {
+    var stdin = []
+
+    process.stdin.resume()
+    process.stdin.on("data", function (data) {
+      stdin.push(data.toString())
+    }).on("end", function () {
+      console.log(simplify(stdin.join("")))
+    })
+  } else {
+    console.log(simplify(process.argv.slice(2).join(" ")))
+  }
 } else {
   module.exports = simplify
 }
@@ -17,7 +28,8 @@ function simplify(input) {
     var match = input.match(new RegExp("^" + normalize(dt.text()) + "$"))
 
     if (match) {
-      var definition = dd.find("text()|div").filter(function (node) {
+      var line_nodes = dd.get("div") ? dd.find("div") : [dd]
+      var definition = line_nodes.filter(function (node) {
         return /\S/.test(node.text())
       }).map(function (node) {
         return normalize(node.text())
