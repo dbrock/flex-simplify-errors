@@ -4,6 +4,7 @@
   "description": "Simplify Flash/Flex error messages",
   "version": "0.0.0",
   "main": "simplify.js",
+  "bin": "simplify.js",
   "dependencies": {
     "libxmljs": "~0.5.4"
   },
