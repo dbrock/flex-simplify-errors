@@ -28,6 +28,12 @@
       <li><var>quux.as:123</var> filename plus optional line number</li>
     </ul>
     <dl>
+      <dt>a target file must be specified</dt>
+      <dd>flex-compiler: no input files</dd>
+
+      <dt>unable to open '(.*)'</dt>
+      <dd>flex-compiler: <var>foo</var>: no such file or directory</dd>
+
       <dt>Unable to resolve MXML language version. Please specify the
         language namespace on the root document tag</dt>
       <dd>missing xmlns:fx="http://ns.adobe.com/mxml/2009"</dd>
@@ -111,13 +117,15 @@
       <dd>warning: ‘<var>foo</var>’ missing type</dd>
 
       <dt>
-        Warning: This compilation unit did not have a factoryClass specified
-        in Frame metadata to load the configured runtime shared
-        libraries. To compile without runtime shared libraries either set
-        the -static-link-runtime-shared-libraries option to true or remove
-        the -runtime-shared-libraries option
+        Warning: This compilation unit did not have a factoryClass
+        specified in Frame metadata to load the configured runtime
+        shared libraries\. To compile without runtime shared libraries
+        either set the -static-link-runtime-shared-libraries option to
+        true or remove the -runtime-shared-libraries option
       </dt>
-      <dd>warning: dangling runtime shared libraries</dd>
+      <dd>
+        warning: dangling runtime shared libraries (pure Flash project?)
+      </dd>
 
       <dt>A file found in a source-path must have the same package structure
         '(.*)', as the definition's package, '(.*)'</dt>
@@ -126,6 +134,12 @@
       <dt>A file found in a source-path '(.*)' must have the same name as
         the class definition inside the file '(.*)'</dt>
       <dd>name should be ‘<var>foo</var>’</dd>
+
+      <dt>A file found in a source-path must have an externally
+        visible definition. If a definition in the file is meant to be
+        externally visible, please put the definition in
+        a package.</dt>
+      <dd>no external definition</dd>
 
       <dt>Comparison between a value with static type (.+) and a possibly
         unrelated type (.+)</dt>
@@ -159,9 +173,6 @@
 
       <dt>Syntax error: XML does not have matching begin and end tags</dt>
       <dd>XML tag mismatch</dd>
-
-      <dt>(.*)</dt>
-      <dd><var>foo</var></dd>
     </dl>
   </body>
 </html>

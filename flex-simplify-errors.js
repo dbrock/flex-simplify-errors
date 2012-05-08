@@ -1,9 +1,14 @@
 #!/usr/bin/env node
 
+var format = require("util").format
 var inspect = require("util").inspect
 var messages_html = require("libxmljs").parseXmlString(
-  require("fs").readFileSync(__dirname + "/messages.html").toString()
+  require("fs").readFileSync(
+    __dirname + "/flex-error-messages.html"
+  ).toString()
 )
+
+RegExp.quote = require("regexp-quote")
 
 if (require.main === module) {
   if (process.argv.length === 2) {
@@ -22,28 +27,50 @@ if (require.main === module) {
   module.exports = simplify
 }
 
-function simplify(input) {
-  var result
+function simplify(text) {
+  return text.replace(/\n$/, "").split("\n").map(simplify_line).join("\n")
+}
 
-  return messages_html.find("//dt").some(function (dt) {
+function simplify_line(message) {
+  var filename, line, match
+
+  if ((match = message.match(
+    (/^(\/[^(:]+)(?:\((\d+)\))?: (?:col: \d+ )?(.+)$/)
+  ))) {
+    filename = match[1].replace(
+      new RegExp("^" + RegExp.quote(process.cwd() + "/")), ""
+    )
+    line = match[2]
+    message = match[3]
+  }
+
+  message = message.replace(/^Error: /, "")
+  messages_html.find("//dt").some(function (dt) {
     var dd = dt.get("following-sibling::dd")
-    var match = input.match(new RegExp("^" + normalize(dt.text()) + "$"))
 
-    if (match) {
-      var line_nodes = dd.get("div") ? dd.find("div") : [dd]
-      var definition = line_nodes.filter(function (node) {
-        return /\S/.test(node.text())
-      }).map(function (node) {
-        return normalize(node.text())
+    if ((match = message.match(
+      new RegExp("^" + normalize(dt.text()) + "\.?$")
+    ))) {
+      var line_elements = dd.get("div") ? dd.find("div") : [dd]
+      var definition = line_elements.map(function (line) {
+        return normalize(line.text())
       }).join("\n")
 
-      result = evaluate(definition, match)
+      message = evaluate(definition, match)
 
       return true
     } else {
       return false
     }
-  }) ? result : input
+  })
+
+  if (filename && line) {
+    message = format("%s:%d: %s", filename, line, message)
+  } else if (filename) {
+    message = format("%s: %s", filename, message)
+  }
+
+  return message
 }
 
 function evaluate(definition, match) {
@@ -65,8 +92,8 @@ function evaluate(definition, match) {
         return type_name_value(value)
       }
     }
-  ).split("\n").map(function (line) {
-    if (/^warning: /.test(line)) {
+   ).split("\n").map(function (line) {
+    if (/^(warning|flex-compiler): /i.test(line)) {
       return line
     } else {
       return "error: " + line

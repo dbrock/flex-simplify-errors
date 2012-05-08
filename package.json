@@ -1,12 +1,13 @@
 {
   "author": "Daniel Brockman <@dbrock>",
-  "name": "simplify-flex-error",
+  "name": "flex-simplify-errors",
   "description": "Simplify Flash/Flex error messages",
   "version": "0.0.0",
-  "main": "simplify.js",
-  "bin": "simplify.js",
+  "main": "flex-simplify-errors.js",
+  "bin": "flex-simplify-errors.js",
   "dependencies": {
-    "libxmljs": "~0.5.4"
+    "libxmljs": "~0.5.4",
+    "regexp-quote": "~0.0.0"
   },
   "devDependencies": {},
   "optionalDependencies": {},
