@@ -7,7 +7,8 @@
   "bin": "flex-simplify-errors.js",
   "dependencies": {
     "libxmljs": "~0.5.4",
-    "regexp-quote": "~0.0.0"
+    "regexp-quote": "~0.0.0",
+    "colors": "~0.6.0-1"
   },
   "devDependencies": {},
   "optionalDependencies": {},

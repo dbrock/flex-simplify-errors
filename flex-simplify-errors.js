@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 
+var colors = require("colors")
 var format = require("util").format
 var inspect = require("util").inspect
+var path = require("path")
+
 var messages_html = require("libxmljs").parseXmlString(
   require("fs").readFileSync(
     __dirname + "/flex-error-messages.html"
@@ -44,12 +47,15 @@ function simplify_line(message) {
     message = match[3]
   }
 
-  message = message.replace(/^Error: /, "")
+  message = message
+    .replace(/^Error: /, "")
+    .replace(/^Warning: /, "warning: ")
+
   messages_html.find("//dt").some(function (dt) {
     var dd = dt.get("following-sibling::dd")
 
     if ((match = message.match(
-      new RegExp("^" + normalize(dt.text()) + "\.?$")
+      new RegExp("^" + normalize(dt.text()) + "\.?$", "i")
     ))) {
       var line_elements = dd.get("div") ? dd.find("div") : [dd]
       var definition = line_elements.map(function (line) {
@@ -63,6 +69,19 @@ function simplify_line(message) {
       return false
     }
   })
+
+  var basename = path.basename(filename)
+  var dirname = path.dirname(filename)
+
+  filename = colors ? path.join(
+    colors.grey(dirname), colors.bold(basename)
+  ) : path.join(basename, dirname)
+
+  if (colors) {
+    message = message.replace(/^(?:warning|error): /i, function (match) {
+      return colors.bold(colors.red(match))
+    })
+  }
 
   if (filename && line) {
     message = format("%s:%d: %s", filename, line, message)
@@ -93,11 +112,11 @@ function evaluate(definition, match) {
       }
     }
    ).split("\n").map(function (line) {
-    if (/^(warning|flex-compiler): /i.test(line)) {
-      return line
-    } else {
-      return "error: " + line
-    }
+     if (/^(warning|flex-compiler): /.test(line)) {
+       return line
+     } else {
+       return "error: " + line
+     }
   }).join("\n")
 }
 
