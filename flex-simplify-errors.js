@@ -21,20 +21,29 @@ if (require.main === module) {
     process.stdin.on("data", function (data) {
       stdin.push(data.toString())
     }).on("end", function () {
-      console.log(simplify(stdin.join("")))
+      process.stdout.write(simplify(stdin.join("")))
     })
   } else {
-    console.log(simplify(process.argv.slice(2).join(" ")))
+    process.stdout.write(simplify(process.argv.slice(2).join(" ")))
   }
 } else {
   module.exports = simplify
 }
 
-function simplify(text) {
-  return text.replace(/\n$/, "").split("\n").map(simplify_line).join("\n")
+function simplify(text, options) {
+  options = options || {}
+
+  var input_lines = text.replace(/\n$/, "").split("\n")
+  var output_lines = input_lines.filter(function (line) {
+    return /^\S/.test(line)
+  }).map(function (line) {
+    return simplify_line(line, options)
+  })
+
+  return output_lines.length ? output_lines.join("\n") + "\n" : ""
 }
 
-function simplify_line(message) {
+function simplify_line(message, options) {
   var filename, line, match
 
   if ((match = message.match(
@@ -47,15 +56,15 @@ function simplify_line(message) {
     message = match[3]
   }
 
-  message = message
-    .replace(/^Error: /, "")
+  message = message.replace(/\.$/, "")
+    .replace(/^ ?Error: /, "")
     .replace(/^Warning: /, "warning: ")
 
   messages_html.find("//dt").some(function (dt) {
     var dd = dt.get("following-sibling::dd")
 
     if ((match = message.match(
-      new RegExp("^" + normalize(dt.text()) + "\.?$", "i")
+      new RegExp("^" + normalize(dt.text()) + "$", "i")
     ))) {
       var line_elements = dd.get("div") ? dd.find("div") : [dd]
       var definition = line_elements.map(function (line) {
@@ -70,14 +79,12 @@ function simplify_line(message) {
     }
   })
 
-  var basename = path.basename(filename)
-  var dirname = path.dirname(filename)
+  if (options.colors) {
+    filename = filename && path.join(
+      colors.grey(path.dirname(filename)),
+      colors.bold(path.basename(filename))
+    )
 
-  filename = colors ? path.join(
-    colors.grey(dirname), colors.bold(basename)
-  ) : path.join(basename, dirname)
-
-  if (colors) {
     message = message.replace(/^(?:warning|error): /i, function (match) {
       return colors.bold(colors.red(match))
     })
@@ -86,7 +93,7 @@ function simplify_line(message) {
   if (filename && line) {
     message = format("%s:%d: %s", filename, line, message)
   } else if (filename) {
-    message = format("%s: %s", filename, message)
+    message = format("%s:0: %s", filename, message)
   }
 
   return message
